@@ -2,6 +2,8 @@ package com.sam.level1;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -72,16 +74,208 @@ public class StringQTests {
 
 	@Test
 	public void ReverseAllAlpha() {
-		Assert.assertEquals("Has correct output","tset",testObj.reverse_string_nsym("test".toCharArray()));
+		Assert.assertEquals("Has correct output", "tset",
+				testObj.reverse_string_nsym("test".toCharArray()));
 	}
 
 	@Test
 	public void ReverseAllSymbol() {
-		Assert.assertEquals("Has correct output","*&@#$!",testObj.reverse_string_nsym("*&@#$!".toCharArray()));
+		Assert.assertEquals("Has correct output", "*&@#$!",
+				testObj.reverse_string_nsym("*&@#$!".toCharArray()));
 	}
 
 	@Test
 	public void ReverseFewSymbol() {
-		Assert.assertEquals("Has correct output","$rama#",testObj.reverse_string_nsym("$amar#".toCharArray()));
+		Assert.assertEquals("Has correct output", "$rama#",
+				testObj.reverse_string_nsym("$amar#".toCharArray()));
+	}
+
+	@Test
+	public void EditDistZero() {
+		Assert.assertTrue(testObj.edit_dist_check("Apple", "Apple"));
+	}
+
+	@Test
+	public void EditDistMany() {
+		Assert.assertFalse(testObj.edit_dist_check("Apple", "Crane"));
+	}
+
+	@Test
+	public void EditDistOneSubs() {
+		Assert.assertTrue(testObj.edit_dist_check("Apple", "Ppple"));
+	}
+
+	@Test
+	public void EditDistOneDel() {
+		Assert.assertTrue(testObj.edit_dist_check("Apple", "Aapple"));
+	}
+
+	@Test
+	public void EditDistTwoSubs() {
+		Assert.assertFalse(testObj.edit_dist_check("People", "Coecle"));
+	}
+
+	@Test
+	public void EditDistTwoDel() {
+		Assert.assertFalse(testObj.edit_dist_check("People", "Peoe"));
+	}
+
+	@Test
+	public void ReverseWordsEmppty() {
+		Assert.assertEquals("", testObj.reverse_words(""));
+	}
+
+	@Test
+	public void ReverseWordsOneWord() {
+		Assert.assertEquals("tahW", testObj.reverse_words("What"));
+	}
+
+	@Test
+	public void ReverseWordsMultiWord() {
+		Assert.assertEquals("tahW si gnitae",
+				testObj.reverse_words("What is eating"));
+	}
+
+	@Test
+	public void ReverseWordsMultiWordWithNums() {
+		Assert.assertEquals("tahW si gnitae 4321",
+				testObj.reverse_words("What is eating 1234"));
+	}
+
+	@Test
+	public void DeserializeEmpty() {
+		ArrayList<String> results = new ArrayList<String>();
+		Assert.assertEquals(results,
+				testObj.deserializeStr(""));
+	}
+
+	@Test
+	public void DeserializeOneString() {
+		ArrayList<String> results = new ArrayList<String>();
+		results.add("Subway");
+		Assert.assertEquals(results,
+				testObj.deserializeStr("Subway[;]"));
+	}
+
+	@Test
+	public void DeserializeManyStrings() {
+		ArrayList<String> results = new ArrayList<String>();
+		results.add("Subway");
+		results.add("Eat");
+		results.add("Fresh");
+		Assert.assertEquals(results,
+				testObj.deserializeStr("Subway[;]Eat[;]Fresh[;]"));
+	}
+
+	@Test
+	public void DeserializeManyStringsWithDelimiter() {
+		ArrayList<String> results = new ArrayList<String>();
+		results.add("Subway");
+		results.add("Eat");
+		results.add("Fresh");
+		Assert.assertEquals(results,
+				testObj.deserializeStr("Subway<:>Eat[;]Fresh[;]"));
+	}
+
+	@Test
+	public void DeserializeWithSymbols() {
+		ArrayList<String> results = new ArrayList<String>();
+		results.add("Subway[]");
+		results.add("<>Eat");
+		results.add("<@>Fresh");
+		Assert.assertEquals(results,
+				testObj.deserializeStr("Subway[]<:><>Eat[;]<@>Fresh[;]"));
+	}
+
+	@Test
+	public void DeserializeWithEmptyStrs() {
+		ArrayList<String> results = new ArrayList<String>();
+		results.add("");
+		results.add("");
+		results.add("");
+		Assert.assertEquals(results,
+				testObj.deserializeStr("<:>[;][;]"));
+	}
+
+	@Test
+	public void SerializeWithEmptyStrs() {
+
+		String[] inStrs = new String[] {"","",""};
+		Assert.assertEquals("[;][;][;]",
+				testObj.serializeArray(inStrs));
+	}
+
+	@Test
+	public void SerializeWithOneString() {
+
+		String[] inStrs = new String[] {"Chipotle"};
+		Assert.assertEquals("Chipotle[;]",
+				testObj.serializeArray(inStrs));
+	}
+
+	@Test
+	public void SerializeWithEmptyArray() {
+
+		String[] inStrs = new String[] {};
+		Assert.assertEquals("",
+				testObj.serializeArray(inStrs));
+	}
+
+	@Test
+	public void SerializeWithMultiStrings() {
+
+		String[] inStrs = new String[] {"Game","Of","Thrones"};
+		Assert.assertEquals("Game[;]Of[;]Thrones[;]",
+				testObj.serializeArray(inStrs));
+	}
+
+	@Test
+	public void SerializeWithMultiStringsDelimiter() {
+
+		String[] inStrs = new String[] {"Game[;]","Of","Thrones"};
+		Assert.assertEquals("Game[;]<:>Of[;]Thrones[;]",
+				testObj.serializeArray(inStrs));
+	}
+
+	@Test
+	public void RotateStrEmpty() {
+		Assert.assertEquals("",
+				testObj.leftRotateStr("", 2));
+	}
+
+	@Test
+	public void RotateStrByTooMuch() {
+		Assert.assertEquals("a",
+				testObj.leftRotateStr("a", 2));
+	}
+
+	@Test
+	public void RotateStrByZero() {
+		Assert.assertEquals("a",
+				testObj.leftRotateStr("a", 0));
+	}
+
+	@Test
+	public void RotateStrByOne() {
+		Assert.assertEquals("yrionT",
+				testObj.leftRotateStr("Tyrion", 1));
+	}
+
+	@Test
+	public void RotateStrByMany() {
+		Assert.assertEquals("rionTy",
+				testObj.leftRotateStr("Tyrion", 2));
+	}
+
+	@Test
+	public void RotateStrBylength() {
+		Assert.assertEquals("Tyrion",
+				testObj.leftRotateStr("Tyrion", 6));
+	}
+
+	@Test
+	public void RotateStrByNeg() {
+		Assert.assertEquals("Tyrion",
+				testObj.leftRotateStr("Tyrion", -2));
 	}
 }
