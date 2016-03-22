@@ -201,4 +201,47 @@ public class StringQ {
 		}
 		return work_str.toString();
 	}
+
+	// Check if a sentence is a palindrome or not <ignore symbols and case
+	// sensitivity
+	// A man, a plan, a canal, Panama!
+	// aman,aplan,acanal,panama!
+	public boolean check_palindrome(String inStr) {
+		// remove spaces and convert to lower
+		inStr = inStr.trim().toLowerCase();
+		int start = 0;
+		int end = inStr.length() - 1;
+		while (start <= end) {
+			if (is_alpha(inStr.charAt(start))) {
+				if (is_alpha(inStr.charAt(end))) {
+					if (inStr.charAt(start) == (inStr.charAt(end))) {
+						start++;
+						end--;
+					} else {
+						return false;
+					}
+				} else {
+					end--;
+				}
+			} else {
+				start++;
+			}
+		}
+		return true;
+	}
+
+	// Remove string from a sentence
+
+	public String remove_space(char[] inStr) {
+		int charIndex = 0;
+		int runner = 0;
+		while (runner < inStr.length) {
+			if (inStr[runner] != ' ') {
+				inStr[charIndex] = inStr[runner];
+				charIndex++;
+			}
+			runner++;
+		}
+		return new String(inStr).substring(0, charIndex);
+	}
 }

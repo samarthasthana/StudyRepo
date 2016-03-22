@@ -145,16 +145,14 @@ public class StringQTests {
 	@Test
 	public void DeserializeEmpty() {
 		ArrayList<String> results = new ArrayList<String>();
-		Assert.assertEquals(results,
-				testObj.deserializeStr(""));
+		Assert.assertEquals(results, testObj.deserializeStr(""));
 	}
 
 	@Test
 	public void DeserializeOneString() {
 		ArrayList<String> results = new ArrayList<String>();
 		results.add("Subway");
-		Assert.assertEquals(results,
-				testObj.deserializeStr("Subway[;]"));
+		Assert.assertEquals(results, testObj.deserializeStr("Subway[;]"));
 	}
 
 	@Test
@@ -193,38 +191,34 @@ public class StringQTests {
 		results.add("");
 		results.add("");
 		results.add("");
-		Assert.assertEquals(results,
-				testObj.deserializeStr("<:>[;][;]"));
+		Assert.assertEquals(results, testObj.deserializeStr("<:>[;][;]"));
 	}
 
 	@Test
 	public void SerializeWithEmptyStrs() {
 
-		String[] inStrs = new String[] {"","",""};
-		Assert.assertEquals("[;][;][;]",
-				testObj.serializeArray(inStrs));
+		String[] inStrs = new String[] { "", "", "" };
+		Assert.assertEquals("[;][;][;]", testObj.serializeArray(inStrs));
 	}
 
 	@Test
 	public void SerializeWithOneString() {
 
-		String[] inStrs = new String[] {"Chipotle"};
-		Assert.assertEquals("Chipotle[;]",
-				testObj.serializeArray(inStrs));
+		String[] inStrs = new String[] { "Chipotle" };
+		Assert.assertEquals("Chipotle[;]", testObj.serializeArray(inStrs));
 	}
 
 	@Test
 	public void SerializeWithEmptyArray() {
 
 		String[] inStrs = new String[] {};
-		Assert.assertEquals("",
-				testObj.serializeArray(inStrs));
+		Assert.assertEquals("", testObj.serializeArray(inStrs));
 	}
 
 	@Test
 	public void SerializeWithMultiStrings() {
 
-		String[] inStrs = new String[] {"Game","Of","Thrones"};
+		String[] inStrs = new String[] { "Game", "Of", "Thrones" };
 		Assert.assertEquals("Game[;]Of[;]Thrones[;]",
 				testObj.serializeArray(inStrs));
 	}
@@ -232,50 +226,109 @@ public class StringQTests {
 	@Test
 	public void SerializeWithMultiStringsDelimiter() {
 
-		String[] inStrs = new String[] {"Game[;]","Of","Thrones"};
+		String[] inStrs = new String[] { "Game[;]", "Of", "Thrones" };
 		Assert.assertEquals("Game[;]<:>Of[;]Thrones[;]",
 				testObj.serializeArray(inStrs));
 	}
 
 	@Test
 	public void RotateStrEmpty() {
-		Assert.assertEquals("",
-				testObj.leftRotateStr("", 2));
+		Assert.assertEquals("", testObj.leftRotateStr("", 2));
 	}
 
 	@Test
 	public void RotateStrByTooMuch() {
-		Assert.assertEquals("a",
-				testObj.leftRotateStr("a", 2));
+		Assert.assertEquals("a", testObj.leftRotateStr("a", 2));
 	}
 
 	@Test
 	public void RotateStrByZero() {
-		Assert.assertEquals("a",
-				testObj.leftRotateStr("a", 0));
+		Assert.assertEquals("a", testObj.leftRotateStr("a", 0));
 	}
 
 	@Test
 	public void RotateStrByOne() {
-		Assert.assertEquals("yrionT",
-				testObj.leftRotateStr("Tyrion", 1));
+		Assert.assertEquals("yrionT", testObj.leftRotateStr("Tyrion", 1));
 	}
 
 	@Test
 	public void RotateStrByMany() {
-		Assert.assertEquals("rionTy",
-				testObj.leftRotateStr("Tyrion", 2));
+		Assert.assertEquals("rionTy", testObj.leftRotateStr("Tyrion", 2));
 	}
 
 	@Test
 	public void RotateStrBylength() {
-		Assert.assertEquals("Tyrion",
-				testObj.leftRotateStr("Tyrion", 6));
+		Assert.assertEquals("Tyrion", testObj.leftRotateStr("Tyrion", 6));
 	}
 
 	@Test
 	public void RotateStrByNeg() {
-		Assert.assertEquals("Tyrion",
-				testObj.leftRotateStr("Tyrion", -2));
+		Assert.assertEquals("Tyrion", testObj.leftRotateStr("Tyrion", -2));
+	}
+
+	@Test
+	public void PlaindromeEmpty() {
+		Assert.assertTrue(testObj.check_palindrome(""));
+	}
+
+	@Test
+	public void PlaindromeSingleChar() {
+		Assert.assertTrue(testObj.check_palindrome("a"));
+	}
+
+	@Test
+	public void PlaindromeMultiChar() {
+		Assert.assertTrue(testObj.check_palindrome("abba"));
+	}
+
+	@Test
+	public void PlaindromeMultiWithSpace() {
+		Assert.assertTrue(testObj.check_palindrome("ab ba"));
+	}
+
+	@Test
+	public void PlaindromeMultiWithSpaceAndSymb() {
+		Assert.assertTrue(testObj.check_palindrome("a*b ba!"));
+	}
+
+	@Test
+	public void PlaindromeMultiSentence() {
+		Assert.assertTrue(testObj.check_palindrome("A man, a plan, a canal, Panama!"));
+	}
+
+	@Test
+	public void NotPlaindromeMultiSentence() {
+		Assert.assertFalse(testObj.check_palindrome("A man, a Sam, a canal, Panama!"));
+	}
+
+	@Test
+	public void RemoveSpaceEmpty() {
+		char [] test = {};
+
+		Assert.assertEquals("", testObj.remove_space(test));
+	}
+
+	@Test
+	public void RemoveSpaceSingleChar() {
+
+		Assert.assertEquals("a", testObj.remove_space("a".toCharArray()));
+	}
+
+	@Test
+	public void RemoveSpaceMultiChar() {
+
+		Assert.assertEquals("abc", testObj.remove_space("a bc".toCharArray()));
+	}
+
+	@Test
+	public void RemoveMultiSpace() {
+
+		Assert.assertEquals("abc", testObj.remove_space("a b   c".toCharArray()));
+	}
+
+	@Test
+	public void RemoveMultiSpaceWithSymb() {
+
+		Assert.assertEquals("ab@#$c", testObj.remove_space("a b   @#$c".toCharArray()));
 	}
 }
