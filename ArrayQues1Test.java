@@ -127,4 +127,34 @@ public class ArrayQues1Test {
 		Assert.assertEquals(result, testObj.find_arr_addition(arr1, arr2));
 	}
 
+	@Test
+	public void TestFindAvgNil() {
+		int[] inArr = new int[]{};
+		Assert.assertEquals(-1, testObj.find_arr_avg(inArr, 2));
+	}
+
+	@Test
+	public void TestFindAvgHighK() {
+		int[] inArr = new int[]{1,2,3};
+		Assert.assertEquals(-1, testObj.find_arr_avg(inArr, 5));
+	}
+
+	@Test
+	public void TestFindAvgKisLen() {
+		int[] inArr = new int[]{1,2,3};
+		Assert.assertEquals(0, testObj.find_arr_avg(inArr, 3));
+	}
+
+	@Test
+	public void TestFindAvgHP1() {
+		int[] inArr = new int[]{9,5,2,4,3};
+		Assert.assertEquals(2, testObj.find_arr_avg(inArr, 3));
+	}
+
+	@Test
+	public void TestFindAvgLongHP() {
+		int[] inArr = new int[]{1,5,9,4,3,4,7,8,10,11,23,54,3,1,12,90};
+		Assert.assertEquals(3, testObj.find_arr_avg(inArr, 3));
+	}
+
 }

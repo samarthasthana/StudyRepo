@@ -11,6 +11,40 @@ public class ArrayQues1 {
 	// Basically find the maximum positive difference of any two given elements
 	// in an array?
 
+	// Q
+	// Find the subarray with least average
+	// Given an array arr[] of size n and integer k such that k <= n.
+
+	// {3, 7, 90, 20, 10, 50, 40}, k = 3
+	// sliding window of size k
+	// storeAvg
+
+	public int find_arr_avg(int[] inArr, int k) {
+		int len = inArr.length;
+		if (k > len)
+			return -1;
+		float minAvg = Float.MAX_VALUE;
+		int minStart = 0;
+		int startIdx = 0;
+		int runner = 0;
+		float tempSum = 0;
+		while (startIdx + k <= len) {
+			runner = startIdx;
+			while (runner < (startIdx + k)) {
+				tempSum += (float) inArr[runner];
+				runner++;
+			}
+			System.out.println((tempSum / (float) (k - 1)));
+			if (minAvg > (tempSum / (float) (k - 1))) {
+				minAvg = (tempSum / (float) (k - 1));
+				minStart = startIdx;
+			}
+			tempSum = 0;
+			startIdx++;
+		}
+		return minStart;
+	}
+
 	// 2,5,3,1,5,7,4,5,9,2
 	// Brute force traverse each element and find the max diff with elements
 	// after it
@@ -84,7 +118,8 @@ public class ArrayQues1 {
 				idx2--;
 			}
 		}
-		if(carry > 0)result.add(carry);
+		if (carry > 0)
+			result.add(carry);
 		return reverse_list(result);
 	}
 
